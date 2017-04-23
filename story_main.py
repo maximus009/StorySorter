@@ -93,8 +93,11 @@ def train():
         test_loss /= b
         print 'test loss:', test_loss
 
+        
         if test_loss < min_loss:
+            print 'Loss improved from {0} to {1}'.format(min_loss, test_loss)
             min_loss = test_loss
+            print 'Saving model_%s' % expName
             model.save('model_%s.h5' % expName)
             model.save_weights('weights_%s.h5' % expName)
         print "="*100
