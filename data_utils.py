@@ -2,7 +2,7 @@ from json import load
 import numpy as np
 import pickle
 
-dict_file = load(open('data/dict_file.json'))
+dict_file = load(open('dict_file.json'))
 L = len(dict_file)
 
 
