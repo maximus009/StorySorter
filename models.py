@@ -3,6 +3,8 @@ from keras.models import Model
 from keras.layers import Merge,Dense,Input, LSTM, Bidirectional, TimeDistributed, Dropout
 from pointer_net import PointerLSTM
 
+from magic import make_parallel
+
 def baseline_seq2seq_model(input_dim=8896, hiddenStates = 512):
     _input = Input(shape=(5,input_dim))
     encoder_context = Dropout(0.2)(LSTM(hiddenStates, return_sequences=True)(_input))
@@ -22,6 +24,7 @@ def ptrnet_model(input_dim=8896, hiddenStates = 128):
     print decoder.get_shape()
     model = Model(_input,decoder)
 
+    model = make_parallel(model, 4)
     adam = Adam(lr=0.01, decay=1e-3)
     model.compile(loss='categorical_crossentropy', optimizer=adam)
 
