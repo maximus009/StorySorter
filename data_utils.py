@@ -15,16 +15,14 @@ def dump_pkl(pklData, fileName):
 
 def get_features(story_id, items, return_image=True, return_text=True, mode='concat'):
     if return_image:    
-        img_features = np.load("data/vggFeatures/"+story_id+"_vgg.npy")
+        img_features = np.load("../stories/gautam/data/vggFeatures/"+story_id+"_vgg.npy")
 
     if return_text:
-        text_features = np.load("data/skipFeatures/"+story_id+"_skip.npy")
+        text_features = np.load("../stories/gautam/data/skipFeatures/"+story_id+"_skip.npy")
         
     if return_text and return_image:
-        if mode=='sep':
-            return_list = [img_features, text_features]
-        elif mode=='concat':
-            return_list = np.hstack((img_features,text_features))
+        # 'concat' is the only mode
+        return_list = np.hstack((img_features,text_features))
     
     else:
         if return_image:
@@ -44,7 +42,7 @@ def get_story(index=0, input_dim=0, return_image=True, return_text=True, shuffle
         print 'Fetching story:',index
     story = dict_file[index]
     items = story['items']
-    features = get_features(story['story_id'], items, return_image = True, return_text = True)
+    features = get_features(story['story_id'], items, return_image = return_image, return_text = return_text)
 
     data = np.column_stack((features, np.eye(5))).copy()
 
@@ -58,3 +56,14 @@ def get_story(index=0, input_dim=0, return_image=True, return_text=True, shuffle
         Y[k] = data[:,-5:]
 
     return X,Y
+
+def create_indices():
+    indices = np.arange(L)
+    np.random.shuffle(indices)
+    trains, tests = np.split(indices,[8*L/10])
+    dump_pkl(trains, 'trainIndices')
+    dump_pkl(tests, 'testIndices')
+
+
+if __name__ == "__main__":
+    create_indices()
