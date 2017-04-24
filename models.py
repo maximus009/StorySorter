@@ -17,13 +17,14 @@ def baseline_seq2seq_model(input_dim=8896, hiddenStates = 512):
 
     return model
 
-def ptrnet_model(input_dim=8896, timesteps = 5,  hiddenStates = 128):
+def ptrnet_model(input_dim=8896, timesteps = 5,  hiddenStates = 128, parallel=False):
     _input = Input(shape=(timesteps,input_dim))
     encoder_context = Dropout(0.2)(LSTM(hiddenStates, return_sequences=True)(_input))
     decoder = PointerLSTM(hiddenStates, hiddenStates)(encoder_context)
     model = Model(_input,decoder)
 
-    model = make_parallel(model, 4)
+    if parallel:
+        model = make_parallel(model, 4)
     adam = Adam(lr=0.01, decay=1e-3)
     model.compile(loss='categorical_crossentropy', optimizer=adam)
 
