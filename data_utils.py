@@ -34,10 +34,10 @@ def get_features(story_id, items, return_image=True, return_text=True, mode='con
 
 
 
-def get_story(index=0, input_dim=0, return_image=True, return_text=True, shuffle=False, verbose=True):
+def get_story(index=0, input_dim=0, K=4, return_image=True, return_text=True, shuffle=False, verbose=True):
 
-    X = np.zeros((120,5,input_dim))
-    Y = np.zeros((120,5,5))
+    X = np.zeros((K,5,input_dim))
+    Y = np.zeros((K,5,5))
     if verbose:
         print 'Fetching story:',index
     story = dict_file[index]
@@ -50,7 +50,7 @@ def get_story(index=0, input_dim=0, return_image=True, return_text=True, shuffle
     X[0] = data[:,:-5]
     Y[0] = data[:,-5:]
 
-    for k in range(1, 120):
+    for k in range(1, K):
         np.random.shuffle(data)
         X[k] = data[:,:-5]
         Y[k] = data[:,-5:]

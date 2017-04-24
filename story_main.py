@@ -8,12 +8,13 @@ from time import time
 parser = argparse.ArgumentParser(description='Story sorter')
 parser.add_argument('--no-image', dest='NO_IMAGE', default=False, action='store_true')
 parser.add_argument('--no-text', dest='NO_TEXT', default=False, action='store_true')
-parser.add_argument('--batch-size', dest='batch_size', default=False, action='store')
-parser.add_argument('--nb-epoch', dest='nb_epoch', default=False, action='store')
+parser.add_argument('--batch-size', dest='batch_size', default=512, action='store', type=int)
+parser.add_argument('--nb-epoch', dest='nb_epoch', default=1, action='store', type=int)
+parser.add_argument('-K', dest='K', default=5, action='store', type=int)
 
 args = parser.parse_args()
-batch_size = int(args.batch_size)
-nb_epoch = int(args.nb_epoch)
+batch_size = args.batch_size
+nb_epoch = args.nb_epoch
 input_dim = 0
 
 return_text, return_image = True, True
@@ -43,7 +44,7 @@ trainIndices = load_pkl('trainIndices')
 testIndices = load_pkl('testIndices')
 
 
-def generate_batches(batch_size=1, training=True, return_image=return_image, return_text=return_text):
+def generate_batches(batch_size=1, K=4, training=True, return_image=return_image, return_text=return_text):
     
 
     if training:
@@ -62,13 +63,13 @@ def generate_batches(batch_size=1, training=True, return_image=return_image, ret
         print '{2} batch: {0}/{1}'.format(b+1,num_of_batches, _run_mode)
         randomIndex = np.random.choice(_indices,batch_size)
 
-        x = np.zeros((batch_size * 120, 5,  input_dim)) 
-        y = np.zeros((batch_size * 120, 5, 5))
+        x = np.zeros((batch_size * K, 5,  input_dim)) 
+        y = np.zeros((batch_size * K, 5, 5))
 
         for i,r_index in enumerate(randomIndex):
-            X, Y = get_story(r_index, input_dim, return_image=return_image, return_text=return_text, verbose=False)
-            x[i*120:(i+1)*120,:] = X
-            y[i*120:(i+1)*120,:] = Y
+            X, Y = get_story(r_index, input_dim, K, return_image=return_image, return_text=return_text, verbose=False)
+            x[i*K:(i+1)*K,:] = X
+            y[i*K:(i+1)*K,:] = Y
                     
         yield x,y
 
