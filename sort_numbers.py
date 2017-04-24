@@ -3,20 +3,22 @@ from pickle import dump
 from keras.models import Model, Sequential
 from keras.layers import LSTM, TimeDistributed, RepeatVector, Dropout, Dense, Activation, Input, Bidirectional
 from keras.optimizers import Adam, SGD
-
+from scipy.stats import pearsonr
 import argparse
 parser = argparse.ArgumentParser(description='Number sorter')
 parser.add_argument('-N', action='store', dest='N', default=10, type=int)
 parser.add_argument('-m', action='store', dest='m', default=1, type=int)
 parser.add_argument('--replace', action='store', dest='replace', default=False, type=bool)
 parser.add_argument('-P', action='store', dest='P', default=2, type=int)
+parser.add_argument('--batch-size', action='store', dest='batch_size', default=1, type=int)
 
 args = parser.parse_args()
 
 N = num_timesteps = args.N
+P = args.P
 hiddenUnits = N*10
 max_num = N**args.P
-batch_size = 256
+batch_size = args.batch_size 
 
 def one_hot(numbers, num_timesteps, max_num):
     x = np.zeros((len(numbers), num_timesteps, max_num), dtype=np.int)
@@ -134,12 +136,12 @@ loss_thresh = 0.15
 count = 0
 
 
-history = {'loss':[], 'acc':[], 'test_loss':[]}
+history = {'loss':[], 'spear':[]}
 
 for ind, (X,Y) in enumerate(batch_gen(batch_size, num_timesteps, max_num)):
+    print X.shape, Y.shape
     loss, acc = model.train_on_batch(X,Y)
     history['loss'].append(loss)
-    history['acc'].append(acc)
 
     if (ind+1)%1 == 0:
         testX = np.expand_dims(np.random.choice(max_num, num_timesteps, replace=args.replace), axis=0)
@@ -154,13 +156,10 @@ for ind, (X,Y) in enumerate(batch_gen(batch_size, num_timesteps, max_num)):
 
         _loss = evaluate_loss(outputs, golden)
         print _loss
+        print "Pearson:",pearsonr(outputs, golden)[0]
+        _pear = pearsonr(outputs, golden)[0]
 
-        history['test_loss'].append(_loss)
-        if _loss  == 0:
-            if count==5:
-               break 
-            else:
-                count += 1
-        else:
-            count=0
-dump(history,open('history.p','wb'))
+        history['spear'].append(_pear)
+        if _pear > 0.99:
+            break
+dump(history,open('history_{0}_{1}.p'.format(N,P),'wb'))
