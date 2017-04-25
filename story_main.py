@@ -1,5 +1,6 @@
 from data_utils import get_features, get_story, dump_pkl, load_pkl
 from models import baseline_seq2seq_model, ptrnet_model 
+from keras.models import load_model 
 import argparse
 import numpy as np
 from time import time
@@ -45,7 +46,6 @@ testIndices = load_pkl('testIndices')
 
 
 def generate_batches(batch_size=1, K=4, training=True, return_image=return_image, return_text=return_text):
-    
 
     if training:
         _indices = trainIndices
@@ -75,10 +75,13 @@ def generate_batches(batch_size=1, K=4, training=True, return_image=return_image
 
 def train():
     expName = 'ptr128_image_{0}_text_{1}'.format(str(return_image),str(return_text))
-    model = ptrnet_model(input_dim = input_dim, hiddenStates = 128)
-    loss = []
+    model = ptrnet_model(input_dim = input_dim, hiddenStates = 128, parallel=True)
+    model.load_weights('weights_ptr128_image_True_text_True.h5')
+    
+    train_losses = []
+    test_losses = []
     print input_dim
-    min_loss = 10
+    min_loss = 1.68
     for ep in range(nb_epoch):
         ep_start = time()
         print "Epoch:",ep+1
@@ -92,8 +95,9 @@ def train():
         for b, (x,y) in enumerate(generate_batches(batch_size, training=False)):
             test_loss += model.evaluate(x,y, verbose=0, batch_size=4096*4)
         test_loss /= b
-        print 'test loss:', test_loss
+        test_losses.append(test_loss)
 
+        print 'test loss:', test_loss
         
         if test_loss < min_loss:
             print 'Loss improved from {0} to {1}'.format(min_loss, test_loss)
@@ -101,9 +105,11 @@ def train():
             print 'Saving model_%s' % expName
             model.save('model_%s.h5' % expName)
             model.save_weights('weights_%s.h5' % expName)
-        print "="*100
-        loss.append(_loss)
+        train_losses.append(_loss)
+        
+        dump_pkl([train_losses, test_losses], 'stories_losses')
         print time() - ep_start, "seconds for epoch",ep+1
+        print "="*100
 
 if __name__ == "__main__":
     train()
