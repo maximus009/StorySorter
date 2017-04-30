@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bare - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SortyTeller</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Demo</a></li>
+      <li><a href="example">Examples</a></li>
+      <li><a href="about">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<div class="container">
+    <h1>SortyTeller</h1> 
+<div class="row">
+<form action="/" method="Post">
+  <div class="form-group">
+    <div class="col-sm-6">
+    <input type="text" placeholder="Album ID (0 to 40066)" class="form-control" name="album_id" id="index">
+    </div>
+  </div>
+  <div class="col-sm-6">
+  <button type="submit" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 10px 23px;">Submit</button>
+  </div>
+</form>
+</div>
+
+<br>
+  <div class="row">
+  <div class="col-lg-6">
+  <h3>Input</h3>
+  </div>
+<div class="col-lg-6" style="text-align:right">
+  <div class="row">
+    <div class="col-lg-6">
+  <form action="/shuffle" method="Post">
+  <button type="submit" name = "test" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 10px 23px;">Shuffle</button>
+</form>
+</div>
+<div class="col-lg-6">
+  <form action="/arrange" method="Post">
+  <button type="submit" name = "test" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 10px 23px;">Arrange</button>
+</form>
+</div>
+</div>
+</div>
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in shuffled_image %}
+    <td><img src={{image}} class="img-fluid" width="150" height="150"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in shuffled_text %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<div class="container">
+<button type="button" class="btn btn-success" id="show">Sort</button>
+</div>
+<div class="row" id="row">
+  <h3>Predicted Order </h3>
+   <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in sorted_image %}
+    <td><img src={{image}} class="img-fluid" width="150" height="150"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in sorted_text %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+
+  
+  
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+  
+  $('#row').hide();
+    $("#show").click(function(){
+        $( "#row" ).slideUp( 300 ).delay( 800 ).fadeIn( 400 )
+    });
+});
+
+</script>
+
+
+</html>
