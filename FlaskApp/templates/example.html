@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bare - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SortyTeller</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Demo</a></li>
+      <li><a href="example">Examples</a></li>
+      <li><a href="about">About</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="row">
+<div class="col-lg-2">
+<h2 style="padding:30px"> Example 1 </h2>
+</div>
+<div class="col-lg-8">
+  <h3>Shuffled Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im1[0] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text1[0] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+
+ <h3>Correct Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im2[0] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text2[0] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-2">
+<h2 style="padding:30px"> Example 2 </h2>
+</div>
+<div class="col-lg-8">
+    <h3>Shuffled Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im1[1] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text1[1] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+
+ <h3>Correct Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im2[1] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text2[1] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-2">
+<h2 style="padding:30px"> Example 3 </h2>
+</div>
+<div class="col-lg-8">
+    <h3>Shuffled Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im1[2] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text1[2] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+
+ <h3>Correct Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im2[2] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text2[2] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-2">
+<h2 style="padding:30px"> Example 4 </h2>
+</div>
+<div class="col-lg-8">
+    <h3>Shuffled Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im1[3] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text1[3] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+
+ <h3>Correct Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im2[3] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text2[3] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-2">
+<h2 style="padding:30px"> Example 5 </h2>
+</div>
+<div class="col-lg-8">
+    <h3>Shuffled Sequence</h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im1[4] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text1[4] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+
+ <h3> Correct Sequence </h3>
+
+  <table class="table table-bordered">
+  <tbody>
+    <tr>   
+  {% for image in im2[4] %}
+    <td><img src={{image}} class="img-fluid" width="150" height="120"></td>
+    {% endfor %}
+    </tr>
+    <tr>   
+  {% for t in text2[4] %}
+    <td><p>{{t}}</p></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</body>
+
+
+
+</html>
